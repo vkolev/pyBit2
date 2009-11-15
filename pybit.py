@@ -119,6 +119,8 @@ class MyFrame(wx.Frame):
                 short_url = self.short_cligs(long_url, apiKey)
             else:
                 unp = wx.MessageDialog(None, "Unknow problem accured!", "Error", wx.ID_OK | wx.ICON_ERROR )
+                
+            # Copy the short URL to the clipboard
             self.text_ctrl_2.SetValue(short_url)
             clipboard = gtk.clipboard_get()
             clipboard.set_text(short_url)
@@ -199,10 +201,13 @@ class MyFrame(wx.Frame):
             errormess.ShowModal()
             
     def on_button3_clicked(self, widget):
+        # Empties the text fields, so you can add short another URL
         self.entry.set_text("")
         self.entry2.set_text("")
         
     def url_checker(self, long_url):
+        #checks if a correct URL is given
+        # TODO: replace with regular expressions
         if "https://" in long_url and len(long_url) > 14:
             return 1
         elif "http://" in long_url and len(long_url) > 13:
@@ -258,6 +263,7 @@ class MyTwittDialog(wx.Dialog):
         self.Destroy()
 
     def add_url_to_text(self, event):
+        # showld also be changed but for now it works - get's the last entry in the clipboard
         clipboard = gtk.clipboard_get()
         self.text_ctrl_3.AppendText(clipboard.wait_for_text())
 
@@ -270,6 +276,7 @@ class MyTwittDialog(wx.Dialog):
             tlm = wx.MessageDialog(None, "You message is too long to be posted!", "Warning", wx.ID_OK | wx.ICON_WARNING )
             tlm.ShowModal()
         else:
+            # the actual curl command to update the status
             curl = 'curl -s -u %s:%s -d status="%s" %s' % (tuser,tpass,message,site)
             popen(curl, 'r')
             #pipe = popen(curl, 'r')
