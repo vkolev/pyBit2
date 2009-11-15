@@ -156,7 +156,8 @@ class MyFrame(wx.Frame):
             short_url = responde_dict['results'][long_url]['shortUrl']
             return short_url
         except IOError, e:
-            raise "urllib error "
+            errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
+            errormess.ShowModal()
             
     def short_isgd(self, long_url):
         try:
@@ -167,7 +168,8 @@ class MyFrame(wx.Frame):
             request.close()
             return responde
         except IOError, e:
-            raise "urllib error "
+            errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
+            errormess.ShowModal()
             
     
     def short_smsh(self, long_url):
@@ -181,18 +183,20 @@ class MyFrame(wx.Frame):
             short_url = responde_dict['body']
             return short_url
         except IOError, e:
-            raise "urllib error "
+            errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
+            errormess.ShowModal()
             
     def short_cligs(self, long_url, api_key):
         try:
             longUrl = urllib.urlencode(dict(url=long_url))
             apiKey = urllib.urlencode(dict(key=api_key))
-            encodedurl = "htp://cli.gsapi/v1/cligs/create?%s&%s&%s" % (longUrl, apiKey, "pyBit v.1")
+            encodedurl = "http://cli.gs/api/v1/cligs/create?%s&%s&appid=%s" % (longUrl, apiKey, "pybit")
             request = urllib.urlopen(encodedurl)
             responde = request.read()
             return responde
         except IOError, e:
-            raise "urllib error "
+            errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
+            errormess.ShowModal()
             
     def on_button3_clicked(self, widget):
         self.entry.set_text("")
@@ -389,7 +393,7 @@ class MyAboutDialog(wx.Dialog):
         wx.Dialog.__init__(self, *args, **kwds)
         self.bitmap_1 = wx.StaticBitmap(self, -1, wx.Bitmap("icons/icon.png", wx.BITMAP_TYPE_ANY))
         self.label_2 = wx.StaticText(self, -1, "pyBit 2.0")
-        self.label_3 = wx.StaticText(self, -1, "pyBit is an application for shortening URLs and also posting\nthem to twitter or identi.ca.\nIt supports three shortening engines:\n- bit.ly\n- is.gd\n- smsh.me\n\nAuthor: Vladimir Kolev\nLicense: GNU/GPLv3\nLanguage: Python, WxWidgets\nYear: 2009")
+        self.label_3 = wx.StaticText(self, -1, "pyBit is an application for shortening URLs and also posting\nthem to twitter or identi.ca.\nIt supports 4 shortening engines:\n- bit.ly\n- is.gd\n- smsh.me\n- cli.gs\n\nAuthor: Vladimir Kolev\nLicense: GNU/GPLv3\nLanguage: Python, WxWidgets\nYear: 2009")
         self.button_8 = wx.Button(self, -1, "http://pybit.vladimirkolev.com")
         self.button_8.SetForegroundColour(wx.Colour(0, 0, 255))
         self.Bind(wx.EVT_BUTTON, self.on_link_clicked, self.button_8)

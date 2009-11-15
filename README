@@ -1,0 +1,99 @@
+                ********************************
+                *      pyBit2 README file      *
+                *                              *
+                * Author: Vladimir Kolev       *
+                * Licenze: GPLv3               *
+                * Year: 2009                   *
+                ********************************
+                
+
+    Contents:
+        1. Introduction
+        2. Installation
+        3. Configuration
+        4. TODO
+    
+    
+1. Introduction
+-----------------------
+
+    PyBit is a small application written in wxPython for shortening URLs
+    using some of the best shortening engines like: bit.ly, is.gd,
+    cli.gs and smsh.me and posting status updates to twitter or identi.ca. 
+    pyBit tries to be as simple as possible and more userfirendly. So the 
+    configuration is done using a simple preference dialog and all the 
+    buttons and text is bigger. But you have to know, that all passwords 
+    (for twitter and identi.ca) are stored in plain text, so it's NOT 
+    secure, till I figure out a simple way to store the passwords, or 
+    twitter gives a hash authentication method.
+    
+2. Installation
+-----------------------
+
+    PyBit doesn't require any installation, but if you wish, you could do
+    that following the next steps:
+    
+    1. Be sure you have installed the needed dependences:
+    
+        - python-wxgtk2.8
+        - ConfigObj (actually included in the archive
+        
+    2. Copy the folder content to the /opt directory (you could change it
+    but for the example I'll be using /opt)
+    
+        # cp -rp pybit /opt
+        
+    3. Make sure the python.conf file is writable:
+    
+        # chmod 755 /opt/pybit/pybit.conf
+        
+    4. Create a global executable script:
+    
+        # sudo gedit /usr/bin/pybit
+        
+            in the opened editor enter the following content:
+            
+            #!/bin/bash
+            cd /opt/pybit/ && python pytbit.py
+            
+    5. Make the script executable:
+        
+        # sudo chmod +x /usr/bin/pybit
+        
+    6. Now you can add pybit to your applications menu:
+    
+        For GNOME:
+         - Open System -> Preferences -> Main Menu
+         - Select Internet and click on +New Item
+         - Enter the following:
+            Name: pyBit
+            Command: pybit
+            Comment: URL shortening
+         - For icon you could select /opt/pybit/icons/icon.png
+         
+        For KDE:
+         It's identical, but I don't have KDE based distribution to test
+         
+    and That's it about the installation process
+    
+3. Configuration
+-----------------------
+
+    The configuration ot pyBit as I said can be done using the 
+    Preferencess Dialog. All changes made take effect after restarting
+    the application. If you are more expirienced user you could edit the
+    pybit.conf file, but you will nead to read the comments.
+        
+        
+4. TODO
+-----------------------
+    
+    Since pyBit is a new application there are still some things to be
+    done. Here is a small list of the these:
+        - Apply changes without restarting the application
+        - Translate the interface
+        - Make the configuration universal, so the users could add other
+          shortening websites providing only the api URL and where the
+          strings come in. 
+        - Improve the status updater, because now it uses the curl 
+          method for posting to twitter or statusnet identical websites.
