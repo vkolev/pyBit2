@@ -39,6 +39,8 @@
     1. Be sure you have installed the needed dependences:
     
         - python-wxgtk2.8
+        - python-gtk
+        - curl (only needed for the status updater)
         - ConfigObj (actually included in the archive
         
     2. Copy the folder content to the /opt directory (you could change it
