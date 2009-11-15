@@ -27,6 +27,9 @@
     secure, till I figure out a simple way to store the passwords, or 
     twitter gives a hash authentication method.
     
+    Under GNOME pyBit stores the shotened URL directly to your clipboard,
+    so you don't have to select and copy the short URL.
+    
 2. Installation
 -----------------------
 
