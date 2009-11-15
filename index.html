@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>vkolev/pyBit2 @ GitHub</title>
+	
+	<style type="text/css">
+		body {
+  		margin-top: 1.0em;
+  		background-color: #3060c5;
+		  font-family: "Helvetica,Arial,FreeSans"; 
+  		color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+		h1 { font-size: 3.8em; color: #cf9f3a; margin-bottom: 3px; }
+		h1 .small { font-size: 0.4em; }
+		h1 a { text-decoration: none }
+		h2 { font-size: 1.5em; color: #cf9f3a; }
+    h3 { text-align: center; color: #cf9f3a; }
+    a { color: #cf9f3a; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+		pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+	</style>
+	
+</head>
+
+<body>
+  <a href="http://github.com/vkolev/pyBit2"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/vkolev/pyBit2/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/vkolev/pyBit2/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+      
+    <h1><a href="http://github.com/vkolev/pyBit2">pyBit2</a> 
+      <span class="small">by <a href="http://github.com/vkolev">vkolev</a></span></h1>
+
+    <div class="description">
+      PyBit is a small application written in wxPython for shortening URLs using some of the best shortening engines like: bit.ly, is.gd, cli.gs and msh.me and posting status updates to twitter or identi.ca. pyBit tries to be as simple as possible and more userfirendly. So the configuration is one using a simple preference dialog and all the buttons and text is bigger. But you have to know, that all passwords (for twitter and identi.ca) are stored in plain text, so it’s NOT secure, till I figure out a simple way to store the passwords, or twitter gives a hash authentication method.
+
+Under GNOME pyBit stores the shotened URL directly to your clipboard, so you don’t have to select and copy the short URL.
+    </div>
+
+    <p>PyBit is a small application written in wxPython for shortening URLs
+    using some of the best shortening engines like: bit.ly, is.gd,
+    cli.gs and smsh.me and posting status updates to twitter or identi.ca. 
+    pyBit tries to be as simple as possible and more userfirendly. So the 
+    configuration is done using a simple preference dialog and all the 
+    buttons and text is bigger. But you have to know, that all passwords 
+    (for twitter and identi.ca) are stored in plain text, so it's NOT 
+    secure, till I figure out a simple way to store the passwords, or 
+    twitter gives a hash authentication method.
+    
+    Under GNOME pyBit stores the shotened URL directly to your clipboard,
+    so you don't have to select and copy the short URL.</p><h2>Dependencies</h2>
+<p>- python-wxgtk2.8
+- python-gtk
+- curl (only needed for the status updater)
+- ConfigObj (actually included in the archive)</p>
+<h2>Install</h2>
+<p>    1. Be sure you have installed the needed dependences:
+    
+        - python-wxgtk2.8
+        - python-gtk
+        - curl (only needed for the status updater)
+        - ConfigObj (actually included in the archive
+        
+    2. Copy the folder content to the /opt directory (you could change it
+    but for the example I'll be using /opt)
+    
+        # cp -rp pybit /opt
+        
+    3. Make sure the python.conf file is writable:
+    
+        # chmod 755 /opt/pybit/pybit.conf
+        
+    4. Create a global executable script:
+    
+        # sudo gedit /usr/bin/pybit
+        
+            in the opened editor enter the following content:
+            
+            #!/bin/bash
+            cd /opt/pybit/ && python pytbit.py
+            
+    5. Make the script executable:
+        
+        # sudo chmod +x /usr/bin/pybit
+        
+    6. Now you can add pybit to your applications menu:
+    
+        For GNOME:
+         - Open System -> Preferences -> Main Menu
+         - Select Internet and click on +New Item
+         - Enter the following:
+            Name: pyBit
+            Command: pybit
+            Comment: URL shortening
+         - For icon you could select /opt/pybit/icons/icon.png
+         
+        For KDE:
+         It's identical, but I don't have KDE based distribution to test
+         
+    and That's it about the installation process</p>
+<h2>License</h2>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+MA 02110-1301, USA.</p>
+<h2>Authors</h2>
+<p>Vladimir Kolev (vladi@vladimirkolev.com)<br/><br/>      </p>
+<h2>Contact</h2>
+<p>Vladimir Kolev (vladi@vladimirkolev.com)<br/>      </p>
+
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="http://github.com/vkolev/pyBit2/zipball/master">zip</a> or
+      <a href="http://github.com/vkolev/pyBit2/tarball/master">tar</a> formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/vkolev/pyBit2</pre>
+    </p>
+      
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/vkolev/pyBit2">vkolev/pyBit2</a>
+    </div>
+    
+  </div>
+
+  
+</body>
+</html>
