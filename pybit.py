@@ -54,7 +54,10 @@ class MyFrame(wx.Frame):
         # Tool Bar
         self.frame_1_toolbar = wx.ToolBar(self, -1)
         self.SetToolBar(self.frame_1_toolbar)
-        self.frame_1_toolbar.AddLabelTool(ID_TWITT, "Twitt", wx.Bitmap("icons/tweet.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Send message to twitter", "")
+        if "twitter" in site:
+            self.frame_1_toolbar.AddLabelTool(ID_TWITT, "Twitt", wx.Bitmap("icons/tweet.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Send message to twitter", "")
+        else:
+            self.frame_1_toolbar.AddLabelTool(ID_TWITT, "StatusNet", wx.Bitmap("icons/laconic.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Send message to StatusNet based website", "")
         self.frame_1_toolbar.AddSeparator()
         self.frame_1_toolbar.AddLabelTool(ID_CLEAR, "Clear", wx.Bitmap("icons/clear.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Clear", "")
         self.frame_1_toolbar.AddLabelTool(ID_PREFS, "Preferences", wx.Bitmap("icons/preferences.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Settings", "")
