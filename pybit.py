@@ -307,7 +307,7 @@ class MyTwittDialog(wx.Dialog):
             tlm.ShowModal()
         else:
             # the actual curl command to update the status
-            curl = 'curl -s -u %s:%s -d status="%s" %s' % (tuser,tpass,message,site)
+            curl = 'curl -s -u %s:%s -d status="%s" -d source="pyBit" %s' % (tuser,tpass,message,site)
             treturn = commands.getoutput(curl)
             if "Could not authenticate you." in treturn:
                 ems = wx.MessageDialog(None, "There was a problem authenticating you.\n\nPlease check your username and password", "Error", wx.ID_OK | wx.ICON_ERROR)
