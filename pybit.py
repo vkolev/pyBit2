@@ -286,10 +286,10 @@ class MyTwittDialog(wx.Dialog):
     def on_twitter_send(self, event): # wxGlade: MyTwittDialog.<event_handler>
         message = self.text_ctrl_3.GetValue()
         if message == "":
-            tsm = wx.MessageDialog(None, "You message is empty!", "Warning", wx.ID_OK | wx.ICON_WARNING )
+            tsm = wx.MessageDialog(None, "Your message is empty!", "Warning", wx.ID_OK | wx.ICON_WARNING )
             tsm.ShowModal()
         elif len(message) > 140:
-            tlm = wx.MessageDialog(None, "You message is too long to be posted!", "Warning", wx.ID_OK | wx.ICON_WARNING )
+            tlm = wx.MessageDialog(None, "Your message is too long to be posted!", "Warning", wx.ID_OK | wx.ICON_WARNING )
             tlm.ShowModal()
         else:
             # the actual curl command to update the status
