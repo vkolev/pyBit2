@@ -22,7 +22,7 @@ import wx
 import urllib
 import gtk
 from configobj import ConfigObj
-from os import popen
+import commands
 
 # Read the configuration file
 config = ConfigObj("pybit.conf")
@@ -33,7 +33,8 @@ tuser = config['tusername']
 tpass = config['tpassword']
 site = config['siteaddres']
 
-areaList = ["bit.ly", "is.gd", "smsh.me", "cli.gs"]
+areaList = ["bit.ly", "is.gd", "smsh.me", "cli.gs", "tr.im"]
+#areaList = ["bit.ly", "is.gd", "smsh.me", "cli.gs"]
 # begin wxGlade: extracode
 # end wxGlade
 
@@ -133,6 +134,8 @@ class MyFrame(wx.Frame):
                 short_url = self.short_smsh(long_url)
             elif engine == 3:
                 short_url = self.short_cligs(long_url, apiKey)
+            elif engine == 4:
+                short_url = self.short_trim(long_url)
             else:
                 unp = wx.MessageDialog(None, "Unknow problem accured!", "Error", wx.ID_OK | wx.ICON_ERROR )
                 
@@ -216,6 +219,17 @@ class MyFrame(wx.Frame):
             errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
             errormess.ShowModal()
             
+    def short_trim(self, long_url):
+        try:
+            longUrl = long_url
+            encodedurl = "http://api.tr.im/v1/trim_simple?url=%s" % longUrl
+            request = urllib.urlopen(encodedurl)
+            responde = request.read()
+            request.close()
+            return responde
+        except IOError, e:
+            errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
+            errormess.ShowModal()
     def on_button3_clicked(self, widget):
         # Empties the text fields, so you can add short another URL
         self.entry.set_text("")
@@ -294,7 +308,16 @@ class MyTwittDialog(wx.Dialog):
         else:
             # the actual curl command to update the status
             curl = 'curl -s -u %s:%s -d status="%s" %s' % (tuser,tpass,message,site)
-            popen(curl, 'r')
+            treturn = commands.getoutput(curl)
+            if "Could not authenticate you." in treturn:
+                ems = wx.MessageDialog(None, "There was a problem authenticating you.\n\nPlease check your username and password", "Error", wx.ID_OK | wx.ICON_ERROR)
+                ems.ShowModal()
+            elif "<created_at>" in treturn:
+                sms = wx.MessageDialog(None, "Your status was updated!", "Send", wx.ID_OK | wx.ICON_INFORMATION )
+                sms.ShowModal()
+            else:
+                uems = wx.MessageDialog(None, "There was an unknown problem sending your update", "Error", wx.ID_OK | wx.ICON_ERROR)
+                uems.ShowModal()
             #pipe = popen(curl, 'r')
             #print pipe
 
@@ -415,8 +438,8 @@ class MyAboutDialog(wx.Dialog):
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE
         wx.Dialog.__init__(self, *args, **kwds)
         self.bitmap_1 = wx.StaticBitmap(self, -1, wx.Bitmap("icons/icon.png", wx.BITMAP_TYPE_ANY))
-        self.label_2 = wx.StaticText(self, -1, "pyBit 2.0")
-        self.label_3 = wx.StaticText(self, -1, "pyBit is an application for shortening URLs and also posting\nthem to twitter or identi.ca.\nIt supports 4 shortening engines:\n- bit.ly\n- is.gd\n- smsh.me\n- cli.gs\n\nAuthor: Vladimir Kolev\nLicense: GNU/GPLv3\nLanguage: Python, WxWidgets\nYear: 2009")
+        self.label_2 = wx.StaticText(self, -1, "pyBit 2.1")
+        self.label_3 = wx.StaticText(self, -1, "pyBit is an application for shortening URLs and also posting\nthem to twitter or identi.ca.\nIt supports 5 shortening engines:\n- bit.ly\n- is.gd\n- smsh.me\n- cli.gs\n- tr.im\n\nAuthor: Vladimir Kolev\nLicense: GNU/GPLv3\nLanguage: Python, WxWidgets\nYear: 2009")
         self.button_8 = wx.Button(self, -1, "http://pybit.vladimirkolev.com")
         self.button_8.SetForegroundColour(wx.Colour(0, 0, 255))
         self.Bind(wx.EVT_BUTTON, self.on_link_clicked, self.button_8)

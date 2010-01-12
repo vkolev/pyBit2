@@ -19,7 +19,7 @@
 
     PyBit is a small application written in wxPython for shortening URLs
     using some of the best shortening engines like: bit.ly, is.gd,
-    cli.gs and smsh.me and posting status updates to twitter or identi.ca. 
+    cli.gs, smsh.me and tr.im and posting status updates to twitter or identi.ca. 
     pyBit tries to be as simple as possible and more userfirendly. So the 
     configuration is done using a simple preference dialog and all the 
     buttons and text is bigger. But you have to know, that all passwords 
@@ -41,7 +41,7 @@
         - python-wxgtk2.8
         - python-gtk
         - curl (only needed for the status updater)
-        - ConfigObj (actually included in the archive
+        - ConfigObj (actually included in the archive)
         
     2. Copy the folder content to the /opt directory (you could change it
     but for the example I'll be using /opt)
