@@ -20,7 +20,6 @@
 
 import wx
 import urllib
-import gtk
 from configobj import ConfigObj
 import commands
 
@@ -144,9 +143,13 @@ class MyFrame(wx.Frame):
                 
             # Copy the short URL to the clipboard
             self.text_ctrl_2.SetValue(short_url)
-            clipboard = gtk.clipboard_get()
-            clipboard.set_text(short_url)
-            clipboard.store()
+            clipboard = wx.TextDataObject()
+            clipboard.SetText(short_url)
+            if wx.TheClipboard.Open():
+                wx.TheClipboard.SetData(clipboard)
+            else:
+                wx.MessageBox("Unable to open the Clipboard", "Error")
+
 
     def on_twitt_it(self, event): # wxGlade: MyFrame.<event_handler>
         self.twitt_dialog = MyTwittDialog(None, -1, "")
@@ -165,7 +168,9 @@ class MyFrame(wx.Frame):
         self.about_dialog.Show()
         
     def on_exit_app(self, event):
-        self.Destroy()
+        dlg = wx.MessageDialog(self, "Want to exit?", "Exit", wx.YES_NO | wx.ICON_QUESTION)
+        if dlg.ShowModal() == wx.ID_YES:
+			self.Destroy()
 
     def short_bitly(self, long_url, login_user, api_key):
         try:
@@ -178,7 +183,11 @@ class MyFrame(wx.Frame):
             request.close()
             responde_dict = eval(responde)
             short_url = responde_dict['results'][long_url]['shortUrl']
-            return short_url
+            if responde_dict['errorCode'] == 0:
+                return short_url
+            else:
+                wx.MessageBox("There was a problem shortening the URL", "Error")
+            #return short_url
         except IOError, e:
             errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
             errormess.ShowModal()
