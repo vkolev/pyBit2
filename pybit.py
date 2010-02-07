@@ -306,8 +306,15 @@ class MyTwittDialog(wx.Dialog):
 
     def add_url_to_text(self, event):
         # showld also be changed but for now it works - get's the last entry in the clipboard
-        clipboard = gtk.clipboard_get()
-        self.text_ctrl_3.AppendText(clipboard.wait_for_text())
+        if not wx.TheClipboard.IsOpened(): # Check if the clipboard is free (not used by other app)
+            do = wx.TextDataObject()
+            wx.TheClipboard.Open()
+            success = wx.TheClipboard.GetData(do)
+            wx.TheClipboard.Close()
+            if success:
+                self.text_ctrl_3.AppendText(do.GetText())
+        else:
+            wx.MessageBox("Problem reading from the clipboard\nPerhaps other application is using it!","Error")
 
     def on_twitter_send(self, event): # wxGlade: MyTwittDialog.<event_handler>
         message = self.text_ctrl_3.GetValue()
