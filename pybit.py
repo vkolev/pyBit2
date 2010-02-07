@@ -450,7 +450,7 @@ class MyAboutDialog(wx.Dialog):
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE
         wx.Dialog.__init__(self, *args, **kwds)
         self.bitmap_1 = wx.StaticBitmap(self, -1, wx.Bitmap("icons/icon.png", wx.BITMAP_TYPE_ANY))
-        self.label_2 = wx.StaticText(self, -1, "About pyBit")
+        self.label_2 = wx.StaticText(self, -1, "About pyBit 2.1.1")
         self.label_3 = wx.StaticText(self, -1, "pyBit is an application for shortening URLs and also posting\nthem to twitter or identi.ca.\nIt supports 5 shortening engines:\n- bit.ly\n- is.gd\n- smsh.me\n- cli.gs\n- tr.im\n\nAuthor: Vladimir Kolev\nLicense: GNU/GPLv3\nLanguage: Python, WxWidgets\nYear: 2009")
         self.button_8 = wx.Button(self, -1, "http://pybit.vladimirkolev.com")
         self.button_8.SetForegroundColour(wx.Colour(0, 0, 255))
