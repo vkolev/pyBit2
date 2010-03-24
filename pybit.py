@@ -135,7 +135,7 @@ class MyFrame(wx.Frame):
                 short_url = self.short_isgd(long_url)
             elif int(config['engine']) == 2:
                 short_url = self.short_smsh(long_url)
-            elif ing(config['engine']) == 3:
+            elif int(config['engine']) == 3:
                 short_url = self.short_cligs(long_url, config['api'])
             elif int(config['engine']) == 4:
                 short_url = self.short_trim(long_url)
@@ -234,7 +234,11 @@ class MyFrame(wx.Frame):
             encodedurl = "http://cli.gs/api/v1/cligs/create?%s&%s&appid=%s" % (longUrl, apiKey, "pybit")
             request = urllib.urlopen(encodedurl)
             responde = request.read()
-            return responde
+	    if "valid API key" in responde:
+		    errmess = wx.MessageDialog(None, "Please change your API key!", "Invalid API key", wx.ID_OK | wx.ICON_ERROR)
+		    errmess.ShowModal()
+	    else:
+		    return responde
         except IOError, e:
             errormess = wx.MessageDialog(None, "%s" % e, "Error!", wx.ID_OK | wx.ICON_ERROR )
             errormess.ShowModal()
