@@ -53,7 +53,7 @@ class MyFrame(wx.Frame):
         # Tool Bar
         self.frame_1_toolbar = wx.ToolBar(self, -1)
         self.SetToolBar(self.frame_1_toolbar)
-        if "twitter" in site:
+        if "twitter" in config['siteaddres']:
             self.frame_1_toolbar.AddLabelTool(ID_TWITT, "Twitt", wx.Bitmap("icons/tweet.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Send message to twitter", "")
         else:
             self.frame_1_toolbar.AddLabelTool(ID_TWITT, "StatusNet", wx.Bitmap("icons/laconic.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Send message to StatusNet based website", "")
@@ -129,15 +129,15 @@ class MyFrame(wx.Frame):
             nvu.ShowModal()
         else:
             short_url = None
-            if engine == 0:
-                short_url = self.short_bitly(long_url, bituser, apiKey)
-            elif engine == 1:
+            if int(config['engine']) == 0:
+                short_url = self.short_bitly(long_url, config['bitusername'], config['api'])
+            elif int(config['engine']) == 1:
                 short_url = self.short_isgd(long_url)
-            elif engine == 2:
+            elif int(config['engine']) == 2:
                 short_url = self.short_smsh(long_url)
-            elif engine == 3:
-                short_url = self.short_cligs(long_url, apiKey)
-            elif engine == 4:
+            elif ing(config['engine']) == 3:
+                short_url = self.short_cligs(long_url, config['api'])
+            elif int(config['engine']) == 4:
                 short_url = self.short_trim(long_url)
             else:
                 unp = wx.MessageDialog(None, "Unknow problem accured!", "Error", wx.ID_OK | wx.ICON_ERROR )
@@ -151,6 +151,7 @@ class MyFrame(wx.Frame):
                 clipboard.SetText(short_url)
                 if wx.TheClipboard.Open():
                     wx.TheClipboard.SetData(clipboard)
+		    wx.TheClipboard.Close()
                 else:
                     wx.MessageBox("Unable to open the Clipboard", "Error")
 
@@ -333,7 +334,7 @@ class MyTwittDialog(wx.Dialog):
             tlm.ShowModal()
         else:
             # the actual curl command to update the status
-            curl = 'curl -s -u %s:%s -d status="%s" -d source="pyBit" %s' % (tuser,tpass,message,site)
+            curl = 'curl -s -u %s:%s -d status="%s" -d source="pyBit" %s' % (config['tusername'],config['tpassword'],message,config['siteaddres'])
             treturn = commands.getoutput(curl)
             if "Could not authenticate you." in treturn:
                 ems = wx.MessageDialog(None, "There was a problem authenticating you.\n\nPlease check your username and password", "Error", wx.ID_OK | wx.ICON_ERROR)
@@ -358,17 +359,17 @@ class PreferencesFrame(wx.Frame):
         self.sizer_17_staticbox = wx.StaticBox(self, -1, "Site url:")
         self.sizer_16_staticbox = wx.StaticBox(self, -1, "Status update")
         self.label_2 = wx.StaticText(self, -1, "Select Engine:")
-        self.combo_box_1 = wx.ComboBox(self, -1, value=areaList[engine], choices=areaList, style=wx.CB_DROPDOWN|wx.CB_READONLY)
+        self.combo_box_1 = wx.ComboBox(self, -1, value=areaList[int(config['engine'])], choices=areaList, style=wx.CB_DROPDOWN|wx.CB_READONLY)
         self.label_3 = wx.StaticText(self, -1, "Bit.ly Username:")
-        self.text_ctrl_5 = wx.TextCtrl(self, -1, "%s" % bituser)
+        self.text_ctrl_5 = wx.TextCtrl(self, -1, "%s" % config['bitusername'])
         self.label_4 = wx.StaticText(self, -1, "Bit.ly apiKey:")
-        self.text_ctrl_6 = wx.TextCtrl(self, -1, "%s" % apiKey)
+        self.text_ctrl_6 = wx.TextCtrl(self, -1, "%s" % config['api'])
         self.label_5 = wx.StaticText(self, -1, "Username:")
-        self.text_ctrl_7 = wx.TextCtrl(self, -1, "%s" % tuser)
+        self.text_ctrl_7 = wx.TextCtrl(self, -1, "%s" % config['tusername'])
         self.label_6 = wx.StaticText(self, -1, "Password:")
-        self.text_ctrl_8 = wx.TextCtrl(self, -1, "%s" % tpass, style=wx.PASSWORD)
+        self.text_ctrl_8 = wx.TextCtrl(self, -1, "%s" % config['tpassword'], style=wx.PASSWORD)
         self.label_7 = wx.StaticText(self, -1, "URL:")
-        self.text_ctrl_9 = wx.TextCtrl(self, -1, "%s" % site)
+        self.text_ctrl_9 = wx.TextCtrl(self, -1, "%s" % config['siteaddres'])
         self.button_5 = wx.Button(self, wx.ID_CLOSE, "")
         self.button_6 = wx.Button(self, wx.ID_SAVE, "")
 
@@ -389,13 +390,13 @@ class PreferencesFrame(wx.Frame):
         self.text_ctrl_7.SetMinSize((100, 25))
         self.text_ctrl_8.SetMinSize((100, 25))
         self.text_ctrl_9.SetMinSize((300, 25))
-        if engine == 1:
+        if int(config['engine']) == 1:
             self.text_ctrl_5.Enable(False)
             self.text_ctrl_6.Enable(False)
-        elif engine == 2:
+        elif int(config['engine']) == 2:
             self.text_ctrl_5.Enable(False)
             self.text_ctrl_6.Enable(False)
-        elif engine == 3:
+        elif int(config['engine']) == 3:
             self.text_ctrl_5.Enable(False)
         # end wxGlade
 
@@ -442,10 +443,11 @@ class PreferencesFrame(wx.Frame):
         self.Destroy()
 
     def save_settings(self, event): # wxGlade: PreferencesFrame.<event_handler>
-        if self.combo_box_1.GetValue() == engine:
+        if self.combo_box_1.GetSelection() < 0:
             pass
         else:
             config['engine'] = self.combo_box_1.GetSelection()
+	    print self.combo_box_1.GetSelection()
         config['bitusername'] = self.text_ctrl_5.GetValue()
         config['api'] = self.text_ctrl_6.GetValue()
         config['tusername'] = self.text_ctrl_7.GetValue()
@@ -453,8 +455,9 @@ class PreferencesFrame(wx.Frame):
         config['siteaddres'] = self.text_ctrl_9.GetValue()
         try:
             config.write()
-            sd = wx.MessageDialog(None, "Settings saved successfully!\n\nPlease restart pyBit to apply the changes!", "Success", wx.ID_OK | wx.ICON_INFORMATION)
+            sd = wx.MessageDialog(None, "Settings saved successfully!\n\n", "Success", wx.ID_OK | wx.ICON_INFORMATION)
             sd.ShowModal()
+	    self.Destroy()
         except:
             ud = wx.MessageDialog(None, "Problem saving settings", "Error", wx.ID_OK | wx.ICON_ERROR)
             ud.ShowModal()
